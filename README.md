@@ -16,22 +16,16 @@ For Quarto we want to move things around to
 
 ```
    blah/index.md --> blah/index.html
-   blah/blah_image.jpg --> blah/blah_image.jpg
+   images/blah_image.jpg --> images/blah_image.jpg
 ```
 
-This means all URL to images (and other assets such as notebooks) will change, but all webpages will remain the same.
+This means all output URLs and content will remain unchanged, so it won't break any existing links.
 
-For each post:
-
-1. Create a directory of the same name in output folder
-2. Find all internal asset links (images, notebooks, but not other posts)
-3. Copy all internal assets to output location
-4. Update all links to point to new location
-5. Write out to `index.md` in output folder
+To do this we just need to copy all the static asset folders across, and for each post we need to create a directory of the same name and copy the post to `index.md` in that folder.
 
 ## Frontmatter Mapping
 
-TOML -> YAML
+Hugo uses TOML frontmatter, and Quarto uses YAML, so we will have to convert it and map the tags appropriately.
 
 ```
 title -> title
@@ -41,6 +35,25 @@ feature_image --> image
 tags --> categories
 ```
 
-# Notebooks and Rmd
+## Notebooks and Rmd
 
 ...
+
+# Issues
+
+RMarkdown rendering in constant-models.md
+
+```
+  ```{R}
+```
+
+# Checklist
+
+Different blog posts use different features; it's worth manually checking that some of them work correctly:
+
+- [] Large code blocks: `dvi-by-example`
+- [] Large tables: `schema-jobposting`
+- [] Mermaid diagrams: `value-of-gold`
+- [] TeX equations: `symmetry-lie-alebras-qde-2`
+- [] Jupyter notebooks: `calculate-centroid-on-sphere`
+- [] Rmd: `plotting-bayesian-parameters-tidyverse`
