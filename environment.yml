@@ -1,7 +1,20 @@
 name: hugo2quarto
 dependencies:
+  # For conversion scripts
   - python=3.10
+  # For project rendering
+  - quarto=1.1.145
+  # For Rmds
   - r-base=4.2.2
   - r-renv=0.16.0
+  # Dependencies to run individual Rmd files
   - r-rmarkdown=2.18
-  - quarto=1.1.145
+  - r-leaflet=2.1.1
+  - r-lme4=1.1_31
+  - r-tidyverse=1.3.2
+  - r-rstanarm=2.21.3
+  - r-ggformula=0.10.2
+  - r-reticulate=1.26
+  - r-codetools=0.2_18
+  - pandas=1.5.2
+  - matplotlib=3.6.2
