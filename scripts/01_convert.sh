@@ -27,8 +27,8 @@ sed -i 's|contents:.*|contents: ["/*/*.md", "!notebooks/*"]|' "${OUT_PATH}/index
 rm -rf "${OUT_PATH}/posts/"
 
 # Convert the Markdown posts
-#find "${IN_PATH}/content/post" -name '*.mmark' -o -name '*.md' | \
-#  while read file; do write_post "$file"; done
+find "${IN_PATH}/content/post" -name '*.mmark' -o -name '*.md' | \
+  while read file; do write_post "$file"; done
 
 
 # Convert the Markdown posts
