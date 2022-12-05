@@ -16,5 +16,7 @@ endif
 check:
 	@which pip-compile > /dev/null
 
-clean: check
+clean:
 	rm *.txt
+	rm -rf data/
+	rm -rf output/
