@@ -1,3 +1,7 @@
 name: hugo2quarto
 dependencies:
   - python=3.10
+  - r-base=4.2.2
+  - r-renv=0.16.0
+  - r-rmarkdown=2.18
+  - quarto=1.1.145
