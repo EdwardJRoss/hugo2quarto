@@ -24,6 +24,7 @@ quarto create-project "${OUT_PATH}" --type website:blog
 sed -i 's|contents:.*|contents: ["/*/*.md", "!notebooks/*"]|' "${OUT_PATH}/index.qmd"
 
 # Delete sample posts
+mv "${OUT_PATH}/posts/_metadata.yml" "${OUT_PATH}/_metadata.yml"
 rm -rf "${OUT_PATH}/posts/"
 
 # Convert the Markdown posts
