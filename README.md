@@ -25,7 +25,9 @@ There are a series of scripts to transform the code in `./scripts`:
 
 The input (`./data/`) and output (`./output/`) directories are defined in `./common.sh`, and the actual code to convert post frontmatter from Hugo (TOML) to Quarto (YAML) is `./convert_post.py`.
 
-An overview of the approach can be seen in `./notebooks/convert.ipynb`
+An overview of the approach can be seen in `./notebooks/convert.ipynb`.
+
+The approach to fix TeX is in `./notebooks/mmark2pandoc_maths.ipynb` corresponding to the script `./fix_tex.py`.
 
 # Approach
 
@@ -61,29 +63,42 @@ tags --> categories
 
 ## Notebooks and Rmd
 
-...
+Notebooks have already been converted to markdown, and so we don't bother to regenerate them.
+
+We copy across Rmd files separately (and not their generated HTML).
 
 # Issues
 
-RMarkdown rendering in constant-models.md
+The fix scripts help deal with issues that came up when running this.
 
-```
-  ```{R}
-```
+## Failure to evaluate
 
-* URLs
-* LaTeX display
-* Keeping ipynb files
+In `constant-models.md` an R codeblock has curly brackets in the fenced code block definition (`{R}`), which Hugo ignores, but Quarto thinks is an executable code block.
+Quarto then complains this isn't a `qmd` file and exits with an error.
 
-```
-project:
-  type: website
-  resources:
-    - "*.ipynb"
-```
+This is fixed with `02_fix_R_eval_code_chunks.sh`.
 
-https://nbviewer.org/
+## Broken URLs
 
+There are a few URLs that, mistakenly, have `%_` in them which isn't valid.
+Quarto <1.2 exits with error on this (1.2 emits a warning).
+The script `03_fix_sicp_urls.sh` fixes these examples (and the fact that the URLs have actually changed since it was written).
+
+## Ipynb URLs
+
+Quarto automatically changes all references of `ipynb` to `html`, which breaks my links to the raw `ipynb`.
+To get around this `04_fix_ipynb_url.sh` changes the links to an [nbviewer](https://nbviewer.org/) pointing to the corresponding file in Github.
+
+## Mermaid diagrams
+
+Through some hacks and Javascript I had a few posts with mermaid diagrams.
+Quarto provides this out of the box for `qmd` documents and `05_fix_mermaid.sh` converts them to the quarto format.
+
+## Equation rendering
+
+Hugo mmark uses `$$...$$` for maths blocks, but Pandox uses `$...$` for inline maths blocks.
+We need to convert these, and escape existing `$` signs (unless they are in a code block).
+This is all done in `06_fix_tex.sh` using `./fix_tex.py`.
 
 # Checklist
 
@@ -95,3 +110,7 @@ Different blog posts use different features; it's worth manually checking that s
 - [] TeX equations: `symmetry-lie-alebras-qde-2`
 - [] Jupyter notebooks: `calculate-centroid-on-sphere`
 - [] Rmd: `plotting-bayesian-parameters-tidyverse`
+- [] TeX tables `calculate-logs`
+- [] Previous Checks: `casper-2-to-3`
+- [] `latex-multiple-equations`
+- [] `remote-jupyter-console`
