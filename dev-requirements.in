@@ -1,4 +1,5 @@
 pip-tools
 notebook
+blockdiag
 
 black
