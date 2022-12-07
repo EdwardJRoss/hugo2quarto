@@ -96,21 +96,33 @@ Quarto provides this out of the box for `qmd` documents and `05_fix_mermaid.sh` 
 
 ## Equation rendering
 
-Hugo mmark uses `$$...$$` for maths blocks, but Pandox uses `$...$` for inline maths blocks.
+Hugo mmark uses `$$...$$` for maths blocks, but Pandoc uses `$...$` for inline maths blocks.
 We need to convert these, and escape existing `$` signs (unless they are in a code block).
 This is all done in `06_fix_tex.sh` using `./fix_tex.py`.
 
+## Backslashes
+
+Sometimes we had an unescaped backslash in paragraph text which broke rendering (like `\special` in `dvi-by-example`).
+All these cases were found in `notebooks/mmark2pandoc_backslash.ipynb` and manually corrected.
+
+It's also worth noting that notebooks converted to posts with mathematics used `\\[` and `\\]` for maths blocks, and `\\(` and `\\)` for inline maths (and had extra backslash escapes inside).
+Because there were so few I corrected them manually.
+
+## Internal links
+
+The post `calculate-centroid-on-sphere` had som internal links like `(#Coordinate-transormations)` to link to the section `Coordinate transformations`, which had to be lower cased to work.
+
 # Checklist
 
-Different blog posts use different features; it's worth manually checking that some of them work correctly:
+Different blog posts use different features; it's worth manually checking that some of them work correctly on Quarto 1.3.34
 
-- [] Large code blocks: `dvi-by-example`
-- [] Large tables: `schema-jobposting`
-- [] Mermaid diagrams: `value-of-gold`
-- [] TeX equations: `symmetry-lie-alebras-qde-2`
-- [] Jupyter notebooks: `calculate-centroid-on-sphere`
-- [] Rmd: `plotting-bayesian-parameters-tidyverse`
-- [] TeX tables `calculate-logs`
-- [] Previous Checks: `casper-2-to-3`
-- [] `latex-multiple-equations`
-- [] `remote-jupyter-console`
+- [x] Large code blocks: `dvi-by-example`: Ok after fixes
+- [x] Large tables: `schema-jobposting`: Table overflows to right on desktop full screen, but readable
+- [x] Mermaid diagrams: `value-of-gold`
+- [x] TeX equations: `symmetry-lie-alebras-qde-2`
+- [x] Jupyter notebooks: `calculate-centroid-on-sphere`: Fixed internal links
+- [x] Rmd: `plotting-bayesian-parameters-tidyverse`
+- [x] TeX tables `calculate-logs`
+- [x] Previous Checks: `casper-2-to-3`
+- [x] LaTeX and TeX symbol: `latex-multiple-equations`
+- [] Shows drafts: `remote-jupyter-console`: Yes it does, but they are not indexed
